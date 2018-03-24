@@ -4,21 +4,36 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 
 <body>
-  <p>Welcome to the chat app</p>
-
-    <div>
-      <ol id="messages"></ol>
+    <div class='container-fluid'>
+      <div class='row'>
+        <div class='col-md-4' style='background-color: #0080ff; width: 260px; height: 100vh'>
+          <center><h3>People</h3></center>
+          <div id='users'></div>
+        </div>
+        <div class='col-md-8' style='width: 100%; height: 100vh; display: flex; flex-direction: column;'>
+            <div class='row'>
+              <div>
+                <ol id="messages"></ol>
+              </div>
+            </div>
+            <div class='row' style='background-color: #ececec; display: flex; padding: 10px; margin-top: 90vh; flex-shrink: 0;'>
+              <form id='message-form'>
+                <input  name='message'  class='form-control' placeholder='Message..' style='padding: 10px; flex-grow: 1' />
+                <button type='submit' class='btn bt-sm btn-primary' >Send </button>
+              </form>
+            <button id='location' class='btn btn-sm btn-success'>Send Location</button>
+          </div>
+        </div>
+      </div>
     </div>
 
-  <form id='message-form'>
-    <input name='message' placeholder='Message..' />
-    <button type='submit' >Send </button>
-  </form>
 
-  <button id='location'>Send Location</button>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src='/js/libs/jquery-3.3.1.min.js'></script>
