@@ -9,12 +9,21 @@ socket.on('disconnect', () => {
   console.log('Disconnected from server');
 });
 
+
 socket.on('newMessage', (msg) => {
   console.log(msg)
   let formattedTime = moment(msg.createdAt).format('h:mm a')
   // here we select the new Message and then append it to the screen.
   let li = jQuery('<li></li>')
-  li.text(`${msg.from} ${formattedTime}: ${msg.text}`)
+  li.html(
+    `<div class='container'>
+        <div class='panel'>
+            <div class='panel-body'>
+                <b>${msg.from}</b> <label><span class='badge'>${formattedTime}</span></label> <br> ${msg.text}
+            </div>
+        </div>
+      </div>
+    `)
 
   jQuery('#messages').append(li)
 })
@@ -41,7 +50,15 @@ socket.on('newLocationMessage', (msg) => {
   let formattedTime = moment(msg.createdAt).format('h:mm a')
   let li = jQuery('<li></li>')
   let a = jQuery('<a target="_blank">My Current Location</a>'); // target _blank sets the anchor tag to open in a new tab.
-  li.text(`${msg.from} ${formattedTime}:`)
+  li.html(`
+    <div class='container'>
+      <div class='panel'>
+          <div class='panel-body'>
+              <b>${msg.from}</b> <label><span class='badge'>${formattedTime}</span></label> <br>
+          </div>
+      </div>
+    </div>
+    `)
   a.attr('href', msg.url) // passing two arguments sets the second argument as the value of the first one.
   li.append(a)
   jQuery('#messages').append(li)
