@@ -23,10 +23,11 @@ io.on('connection', (socket) => {
   socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'))
   // socket.broadcast.emit() is used to emit events which gets recieved by all the users except one, the user which sends the data.
 
-  socket.on('CreateMessage', (msg) => {
-    console.log('msg to server', msg)
+  socket.on('CreateMessage', (msg, callback) => {
+    //console.log('msg to server', msg)
     io.emit('newMessage', generateMessage(msg.from, msg.text))
     // io.emit() is used to send the message to all the users .
+    callback()
   })
 
   socket.on('createLocationMessage', (coords) => {

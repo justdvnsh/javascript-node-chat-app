@@ -11,10 +11,10 @@ socket.on('disconnect', () => {
 
 socket.on('newMessage', (msg) => {
   console.log(msg)
-
+  let formattedTime = moment(msg.createdAt).format('h:mm a')
   // here we select the new Message and then append it to the screen.
   let li = jQuery('<li></li>')
-  li.text(`${msg.from}: ${msg.text}`)
+  li.text(`${msg.from} ${formattedTime}: ${msg.text}`)
 
   jQuery('#messages').append(li)
 })
@@ -26,20 +26,22 @@ jQuery('#message-form').on('submit', (event) => {
   // passing the text as an url parameter.
   // but we dont want that. We want our app to load in real time.
 
+  let messageBox = jQuery('[name=message]')
 
   // then we emit an event to CreateMessage
   socket.emit('CreateMessage', {
     from: 'User',
-    text: jQuery('[name=message]').val()
-  }, (msg) => {
-    console.log(msg)
+    text: messageBox.val()
+  }, () => {
+    messageBox.val('') // to set the value to an empty string after the message has been sent
   })
 })
 
 socket.on('newLocationMessage', (msg) => {
+  let formattedTime = moment(msg.createdAt).format('h:mm a')
   let li = jQuery('<li></li>')
   let a = jQuery('<a target="_blank">My Current Location</a>'); // target _blank sets the anchor tag to open in a new tab.
-  li.text(`${msg.from}:`)
+  li.text(`${msg.from} ${formattedTime}:`)
   a.attr('href', msg.url) // passing two arguments sets the second argument as the value of the first one.
   li.append(a)
   jQuery('#messages').append(li)
@@ -54,15 +56,23 @@ locationbutton.on('click', () => {
     return alert('Geolocation service is not supported in your browser.')
   }
 
+  locationbutton.attr('disabled', 'disabled').text('Sending Location...')
+  // Disable the button while the location is being sent and change the text.
+
   navigator.geolocation.getCurrentPosition((position) => {
     //console.log(position)
     // we create a new event passing on the lat and long of the current user's position
+
+    locationbutton.removeAttr('disabled').text('Send Location')
+    // to remove the disbaled attribute and change the text back to normal.
+
     socket.emit('createLocationMessage', {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
     })
   }, () => {
     // this is the error case if the navigator fails.
+    locationbutton.removeAttr('disabled').text('Send Location')
     alert('Unable to fetch location.')
   })
 })

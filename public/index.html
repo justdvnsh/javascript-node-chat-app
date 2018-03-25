@@ -12,11 +12,15 @@
 <body>
     <div class='container-fluid'>
       <div class='row'>
-        <div class='col-md-4' style='background-color: #0080ff; width: 260px; height: 100vh'>
-          <center><h3>People</h3></center>
+        <div class='col-md-2' style='background-color: #007f8b; width: 260px; height: 100vh'>
+          <!--
+          So i prefered Inline styles instead of importing a whole css file, cause i Thoought it would be an overkill fore such common styles.
+          However, you can style your app how ever you want.
+          -->
+          <center><h3 style='color: #ffffff; margin-right: 20px'><b>People</b></h3></center>
           <div id='users'></div>
         </div>
-        <div class='col-md-8' style='width: 100%; height: 100vh; display: flex; flex-direction: column;'>
+        <div class='col-md-10' style='width: 100%; height: 100vh; display: flex; flex-direction: column;'>
             <div class='row'>
               <div>
                 <ol id="messages"></ol>
@@ -24,10 +28,10 @@
             </div>
             <div class='row' style='background-color: #ececec; display: flex; padding: 10px; margin-top: 90vh; flex-shrink: 0;'>
               <form id='message-form'>
-                <input  name='message'  class='form-control' placeholder='Message..' style='padding: 10px; flex-grow: 1' />
-                <button type='submit' class='btn bt-sm btn-primary' >Send </button>
+                <input  name='message' autofocus autocomplete="off" placeholder='Message..' style='padding:10px; width: 100vh' />&nbsp&nbsp
+                <button type='submit' class='btn  btn-primary' style='padding:10px; '>Send </button>&nbsp&nbsp
               </form>
-            <button id='location' class='btn btn-sm btn-success'>Send Location</button>
+            <button id='location' class='btn  btn-success' style='padding: 10px; height: 15%; width: 45vh; margin-top: 3.5px'>Send Location</button>
           </div>
         </div>
       </div>
@@ -37,6 +41,7 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script src='/js/libs/jquery-3.3.1.min.js'></script>
+  <script src='/js/libs/moment.js'></script>
   <script src='/js/index.js'> </script>
 </body>
 
