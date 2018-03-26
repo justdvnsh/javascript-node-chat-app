@@ -39,8 +39,8 @@ socket.on('newMessage', (msg) => {
   let li = jQuery('<li></li>')
   li.html(
     `<div class='container'>
-        <div class='panel'>
-            <div class='panel-body'>
+        <div class='card'>
+            <div class='card-body'>
                 <b>${msg.from}</b> <label><span class='badge'>${formattedTime}</span></label> <br> ${msg.text}
             </div>
         </div>
@@ -61,7 +61,6 @@ jQuery('#message-form').on('submit', (event) => {
 
   // then we emit an event to CreateMessage
   socket.emit('CreateMessage', {
-    from: 'User',
     text: messageBox.val()
   }, () => {
     messageBox.val('') // to set the value to an empty string after the message has been sent
@@ -74,9 +73,9 @@ socket.on('newLocationMessage', (msg) => {
   let a = jQuery('<a target="_blank">My Current Location</a>'); // target _blank sets the anchor tag to open in a new tab.
   li.html(`
     <div class='container'>
-      <div class='panel'>
-          <div class='panel-body'>
-              <b>${msg.from}</b> <label><span class='badge'>${formattedTime}</span></label> <br>
+      <div class='card'>
+          <div class='card-body'>
+              <b>${msg.from}</b> <label><span class='badge'>${formattedTime}</span></label><br> <br>
           </div>
       </div>
     </div>

@@ -48,14 +48,22 @@ io.on('connection', (socket) => {
 
   socket.on('CreateMessage', (msg, callback) => {
     //console.log('msg to server', msg)
-    io.emit('newMessage', generateMessage(msg.from, msg.text))
+
+    let user = users.getUser(socket.id)
+    if(user && isRealStr(msg.text)){
+    io.to(user.room).emit('newMessage', generateMessage(user.name, msg.text))
     // io.emit() is used to send the message to all the users .
+    }
     callback()
   })
 
   socket.on('createLocationMessage', (coords) => {
     // we emit the location to all the users connected.
-    io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude))
+
+    let user = users.getUser(socket.id)
+    if(user){
+      io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude))
+    }
   })
 
   socket.on('disconnect', () => {
