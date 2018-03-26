@@ -22,6 +22,15 @@ socket.on('disconnect', () => {
   console.log('Disconnected from server');
 });
 
+socket.on('UpdateUserList', (users) => {
+  let ol = jQuery('<ol id="myOl"></ol>')
+
+  users.forEach((user) => {
+    ol.append(jQuery('<li class="card"></li>').text(user));
+  })
+
+  jQuery('#users').html(ol)
+})
 
 socket.on('newMessage', (msg) => {
   console.log(msg)
