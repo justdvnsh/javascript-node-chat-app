@@ -1,4 +1,4 @@
-# Node_Todo_api
+# CHATTYY...!!
 
 A complex chat app made in node js and socketIO. Contains funcitonalities like Global and private chats. Users, can connect to other users and chat. Also contains live location funcitonality. Users can share there live location with other people. Online an offline mode and Current online users to chat with functionality also available.
 
