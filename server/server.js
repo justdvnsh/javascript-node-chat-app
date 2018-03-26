@@ -3,7 +3,8 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
-const {generateMessage, generateLocationMessage} = require('./utils/message')
+const {generateMessage, generateLocationMessage} = require('./utils/message');
+const {isRealStr} = require('./utils/validator.js')
 
 let app = express();
 let server = http.createServer(app);
@@ -22,6 +23,16 @@ io.on('connection', (socket) => {
 
   socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'))
   // socket.broadcast.emit() is used to emit events which gets recieved by all the users except one, the user which sends the data.
+
+  // here we listen to the event .
+  socket.on('join', (params, callback) => {
+    if (!isRealStr(params.name) || !isRealStr(params.room)) {
+      callback('Name and Room name are required')
+    }
+
+    callback();         // if there is no error, we want to call the callback function without any argument.
+    // because the argument we pass is only for the error case.
+  })
 
   socket.on('CreateMessage', (msg, callback) => {
     //console.log('msg to server', msg)

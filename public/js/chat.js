@@ -3,6 +3,19 @@ var socket = io();
 socket.on('connect', () => {
   console.log('Connected to server');
 
+  // we create an emit event to join a room. We want the users to join a particular room and chat only to the users, of that room.
+  // also , we would want to validate if the user and room name is provided and real. So,
+  let params = jQuery.deparam(window.location.search)
+
+  socket.emit('join', params, (err) => {
+    if (err) {
+      alert(err)
+      window.location.href = '/';       // we redirect them to the home page if the credentials are invalid.
+    } else {
+      console.log('No error');          // else for the time being we console log the message if there is no error.
+    }
+  })
+
 });
 
 socket.on('disconnect', () => {
